@@ -8,7 +8,7 @@ import com.example.roomsiswa.repositori.RepositoriSiswa
 import com.example.roomsiswa.data.Siswa
 
 class EntryViewModel(private val repositoriSiswa: RepositoriSiswa, isEntryvalid: Boolean): ViewModel() {
-    var uiStateSiswa by mutableStateof(UIStateSiswa(isEntryvalid = isEntryvalid))
+    var uiStateSiswa by mutableStateOf(UIStateSiswa(isEntryvalid = isEntryvalid))
         private set
 
     private fun validasiInput(uiState: DetailSiswa = uiStateSiswa.detailSiswa ): Boolean {
@@ -26,7 +26,7 @@ class EntryViewModel(private val repositoriSiswa: RepositoriSiswa, isEntryvalid:
     }
     suspend fun saveSiswa() {
         if (validasiInput()) {
-            repositoriSiswa.insertSiswa(uiStateSiswa.detailSiswa.toSiswa())
+            repositoriSiswa.insertSiswa(uiStateSiswa.detailSiswa.tooSiswa())
         }
     }
 }
