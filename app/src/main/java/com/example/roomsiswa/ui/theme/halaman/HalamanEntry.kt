@@ -1,4 +1,4 @@
-package com.example.roomsiswa.ui.halaman
+package com.example.roomsiswa.ui.theme.halaman
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,7 +30,7 @@ import com.example.roomsiswa.navigasi.DestinasiNavigasi
 import com.example.roomsiswa.navigasi.SiswaTopAppBar
 import kotlinx.coroutines.launch
 
-object DestinasiEntry : DestinasiNavigasi{
+object DestinasiEntry : DestinasiNavigasi {
     override val route = "item_entry"
     override val titleRes = R.string.entry_siswa
 }
@@ -40,11 +40,10 @@ object DestinasiEntry : DestinasiNavigasi{
 fun EntrySiswaScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: EntryViewModel = viewModel(factory = PenyediaViewModel.Factory )
-){
+    viewModel: EntryViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -54,41 +53,38 @@ fun EntrySiswaScreen(
                 scrollBehavior = scrollBehavior
             )
         }
-    ) {
-            innerPadding ->
+    ) { innerpadding ->
         EntrySiswaBody(
             uiStateSiswa = viewModel.uiStateSiswa,
             onSiswaValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.saveSiswa()
-                    navigateBack
+                    navigateBack()
                 }
             },
             modifier = Modifier
-                .padding(innerPadding)
+                .padding(innerpadding)
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
         )
-
     }
 }
-
 @Composable
 fun EntrySiswaBody(
     uiStateSiswa: UIStateSiswa,
     onSiswaValueChange: (DetailSiswa) -> Unit,
     onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier
-){
-    Column (
+    modifier: Modifier
+) {
+    Column(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large)),
-        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium))
-    ){
+        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium))
+    ) {
         FormInputSiswa(
             detailSiswa = uiStateSiswa.detailSiswa,
             onValueChange = onSiswaValueChange,
-            modifier = modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
         Button(
             onClick = onSaveClick,
@@ -96,57 +92,57 @@ fun EntrySiswaBody(
             shape = MaterialTheme.shapes.small,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = stringResource(id = R.string.btn_submit))
+            Text(stringResource(id = R.string.btn_submit))
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormInputSiswa(
     detailSiswa: DetailSiswa,
-    modifier: Modifier,
-    onValueChange : (DetailSiswa) ->Unit = {},
-    enabled:Boolean = true
-){
-    Column (
-        modifier = modifier,
+    modifier: Modifier = Modifier,
+    onValueChange: (DetailSiswa) -> Unit = {},
+    enabled: Boolean = true
+) {
+    Column(
+        modifier = Modifier,
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
-    ){
+    ) {
         OutlinedTextField(
             value = detailSiswa.nama,
-            onValueChange ={onValueChange(detailSiswa.copy(nama = it))},
-            label = { Text(stringResource(id = R.string.nama))},
-            singleLine = true,
+            onValueChange = { onValueChange(detailSiswa.copy(nama = it)) },
+            label = { Text(stringResource(id = R.string.nama)) },
             modifier = Modifier.fillMaxWidth(),
-            enabled = enabled
+            enabled = enabled,
+            singleLine = true
         )
         OutlinedTextField(
             value = detailSiswa.alamat,
-            onValueChange ={onValueChange(detailSiswa.copy(alamat = it))},
-            label = { Text(stringResource(R.string.alamat)) },
-            singleLine = true,
+            onValueChange = { onValueChange(detailSiswa.copy(alamat = it)) },
+            label = { Text(stringResource(id = R.string.alamat)) },
             modifier = Modifier.fillMaxWidth(),
-            enabled = enabled
+            enabled = enabled,
+            singleLine = true
         )
         OutlinedTextField(
             value = detailSiswa.telpon,
-            onValueChange ={onValueChange(detailSiswa.copy(telpon = it))},
-            label = { Text(stringResource(R.string.telpon)) },
-            singleLine = true,
+            onValueChange = { onValueChange(detailSiswa.copy(telpon = it)) },
+            label = { Text(stringResource(id = R.string.telpon)) },
             modifier = Modifier.fillMaxWidth(),
-            enabled = enabled
+            enabled = enabled,
+            singleLine = true
         )
         if (enabled) {
             Text(
-                text = stringResource(id = R.string.required_field),
+                stringResource(id = R.string.required_field),
                 modifier = Modifier.padding(start = dimensionResource(id = R.dimen.padding_medium))
             )
         }
         Divider(
             thickness = dimensionResource(id = R.dimen.padding_small),
             modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_medium))
-
         )
     }
 }

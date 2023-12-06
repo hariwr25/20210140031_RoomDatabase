@@ -1,9 +1,11 @@
-package com.example.roomsiswa.ui.halaman
+package com.example.roomsiswa.ui.theme.halaman
+
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -38,7 +40,7 @@ import com.example.roomsiswa.model.PenyediaViewModel
 import com.example.roomsiswa.navigasi.DestinasiNavigasi
 import com.example.roomsiswa.navigasi.SiswaTopAppBar
 
-object DestinasiHome: DestinasiNavigasi{
+object DestinasiHome : DestinasiNavigasi {
     override val route = "home"
     override val titleRes = R.string.app_name
 }
@@ -49,7 +51,7 @@ fun HomeScreen(
     navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
-){
+) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -72,35 +74,36 @@ fun HomeScreen(
                     contentDescription = stringResource(id = R.string.entry_siswa)
                 )
             }
-        },
-    ) {
-            innerPadding ->
+        }
+    ) { innerpadding ->
         val uiStateSiswa by viewModel.homeUiState.collectAsState()
         BodyHome(
             itemSiswa = uiStateSiswa.listSiswa,
             modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxWidth()
+                .padding(innerpadding)
+                .fillMaxSize()
+
         )
     }
 }
 
+
 @Composable
 fun BodyHome(
-    itemSiswa : List<Siswa>,
+    itemSiswa: List<Siswa>,
     modifier: Modifier = Modifier
-){
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        if(itemSiswa.isEmpty()){
+        if (itemSiswa.isEmpty()) {
             Text(
                 text = stringResource(id = R.string.deskripsi_no_item),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleLarge
             )
-        }else{
+        } else {
             ListSiswa(
                 itemSiswa = itemSiswa,
                 modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
@@ -108,14 +111,14 @@ fun BodyHome(
         }
     }
 }
+
 @Composable
 fun ListSiswa(
-    itemSiswa : List<Siswa>,
+    itemSiswa: List<Siswa>,
     modifier: Modifier = Modifier
-){
-    LazyColumn(modifier = Modifier){
-        items(items = itemSiswa, key = {it.id}){
-                person ->
+) {
+    LazyColumn(modifier = Modifier) {
+        items(items = itemSiswa, key = { it.id }) { person ->
             DataSiswa(
                 siswa = person,
                 modifier = Modifier
@@ -129,13 +132,13 @@ fun ListSiswa(
 fun DataSiswa(
     siswa: Siswa,
     modifier: Modifier = Modifier
-){
+) {
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
-            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
+            modifier = modifier.padding(dimensionResource(id = R.dimen.padding_large)),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
         ) {
             Row(
@@ -143,22 +146,20 @@ fun DataSiswa(
             ) {
                 Text(
                     text = siswa.nama,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleLarge
                 )
                 Spacer(Modifier.weight(1f))
-                Icon(
-                    imageVector = Icons.Default.Phone,
-                    contentDescription = null,
-                )
+                Icon(imageVector = Icons.Default.Phone, contentDescription = null)
                 Text(
                     text = siswa.telpon,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
             Text(
                 text = siswa.alamat,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium
             )
         }
     }
 }
+
