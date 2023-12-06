@@ -41,6 +41,7 @@ import com.example.roomsiswa.navigasi.SiswaTopAppBar
 object DestinasiHome: DestinasiNavigasi{
     override val route = "home"
     override val titleRes = R.string.app_name
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,6 +84,7 @@ fun HomeScreen(
         )
     }
 }
+
 @Composable
 fun BodyHome(
     itemSiswa : List<Siswa>,
@@ -112,7 +114,7 @@ fun ListSiswa(
     modifier: Modifier = Modifier
 ){
     LazyColumn(modifier = Modifier){
-        items(item = itemSiswa, key = {it.id}){
+        items(items = itemSiswa, key = {it.id}){
                 person ->
             DataSiswa(
                 siswa = person,
